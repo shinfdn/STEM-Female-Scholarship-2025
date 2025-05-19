@@ -1,6 +1,6 @@
 // checkboxHurdle.js
 
-export function setupHurdleCheckboxes(containerId, errorId, inputName = "ハードル") {
+export function setupHurdleCheckboxes(containerId, errorId, inputName = "ハードル[]") {
     const container = document.getElementById(containerId);
     const errorElement = document.getElementById(errorId);
 
