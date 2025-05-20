@@ -3,9 +3,10 @@
 export function autofillFromURL() {
     const params = new URLSearchParams(window.location.search);
 
-    // email の取得と埋め込み
-    const email = params.get('email');
+    // email の取得と+→%2Bの修正
+    let email = params.get('email');
     if (email) {
+        email = email.replace(/ /g, "+"); // スペースになってしまった+を元に戻す
         const emailInput = document.getElementById('email');
         if (emailInput) {
             emailInput.value = email;
