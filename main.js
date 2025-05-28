@@ -48,3 +48,4 @@ document.getElementById("formSubmit").addEventListener("click", (e) => {
     validateRequiredFields(e);
 });
 
+

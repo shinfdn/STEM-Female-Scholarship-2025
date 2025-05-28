@@ -18,40 +18,23 @@ fetch("data/schools2.json")
     .then(response => response.json())
     .then(data => {
         schoolData = data;
-        schoolTypeSelect.addEventListener('change', onSchoolTypeChange); 
-        prefSelect.addEventListener('change', onPrefChange); 
+        schoolTypeSelect.addEventListener('change', resetAndSearchIfKeyword); 
+        prefSelect.addEventListener('change', resetAndSearchIfKeyword); 
         kensakuButton.addEventListener('click', onPrefSearchedPushed);
         // suggestionList.addEventListener('click', );
     })
     .catch(error => console.error('学校データの読み込みに失敗しました:', error));
 
-function onSchoolTypeChange() {
-    selectedSchoolType = schoolTypeSelect.value;
+function resetAndSearchIfKeyword() {
     codeInput.value = '';
     nameInput.value = '';
     const keyword = searchWord.value.trim();
 
-    if (keyword) {
-        suggestionList.innerHTML = '';
-        suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
-        showSuggestions(keyword);
-    } else {
-        suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
-    }
-}
-
-function onPrefChange() {
-    selectedPrefCode = prefSelect.value;
-    codeInput.value = '';
-    nameInput.value = '';
-    const keyword = searchWord.value.trim();
+    suggestionList.innerHTML = '';
+    suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
 
     if (keyword) {
-        suggestionList.innerHTML = '';
-        suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
         showSuggestions(keyword);
-    } else {
-        suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
     }
 }
 
@@ -106,7 +89,11 @@ function showSuggestions(keyword) {
         li.style.listStyle = 'none';
         li.addEventListener('click', () => {
             codeInput.value = 'D999999999999';
-            nameInput.value = '自分の高校が見つからない';
+            nameInput.removeAttribute('readonly');
+            nameInput.placeholder = '学校名を入力してください';
+            nameInput.style.backgroundColor = '#f0faf7';
+            // nameInput.style.color = '#009C7A';
+            nameInput.value = '';
             suggestionList.innerHTML = '';
             suggestionList.setAttribute('data-placeholder', '学校名を入力してください。');
         });
